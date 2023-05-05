@@ -22,6 +22,11 @@ const {resource: users} = useFetch<UserDto[]>(usersUrl)
 
 const {resource: library} = useFetch<LibraryDto>(url)
 
+console.log("In edit-library, library : ", library);
+console.log("In edit-library, books : ", books);
+console.log("In edit-library, users : ", users);
+
+
 const backToList = () => {
 router.push("/")
 }
@@ -43,7 +48,7 @@ const submitLibrary = (libraryDto: LibraryDto) => {
 
 <template>
 <LibraryForm
-v-if="library"
+v-if="library && books && users"
  form-name="Edit"
  :books="books"
  :users="users"

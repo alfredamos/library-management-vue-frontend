@@ -26,6 +26,8 @@ import LogoutView from "@/views/auth/LogoutView.vue";
 import ChangePasswordView from "@/views/auth/ChangePasswordView.vue";
 import EditProfileView from "@/views/auth/EditProfileView.vue";
 import HomeView from "@/views/auth/HomeView.vue";
+import SignupView from "@/views/auth/SignupView.vue";
+
 import { apiContext } from "@/behavior-subject/auth-context.rxjs";
 import { tap } from "rxjs";
 import { ref } from "vue";
@@ -187,6 +189,12 @@ const router = createRouter({
       path: "/home",
       name: "home",
       component: HomeView,
+      meta: { needsNoAuth: true },
+    },
+    {
+      path: "/signup",
+      name: "signup",
+      component: SignupView,
       meta: { needsNoAuth: true },
     },
   ],

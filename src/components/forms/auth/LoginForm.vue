@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type LoginDto from "@/models/auth/login.model";
 import { ref } from "vue";
+import TextInput from "@/utils/TextInput.vue";
 
 const login = ref<LoginDto>({
   email: "",
@@ -27,7 +28,9 @@ const backToList = () => {
           <h4 class="text-center">Login Form</h4>
         </div>
         <div class="card-body">
-          <div class="mb-3">
+          <text-input v-model="login.email" label="Email" />
+          <text-input v-model="login.password" label="Password" />
+          <!-- <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input
               id="email"
@@ -35,8 +38,8 @@ const backToList = () => {
               type="text"
               class="form-control"
             />
-          </div>
-          <div class="mb-3">
+          </div> -->
+          <!-- <div class="mb-3">
             <label for="password" class="form-label">Password</label>
             <input
               v-model.trim="login.password"
@@ -44,7 +47,7 @@ const backToList = () => {
               type="password"
               class="form-control"
             />
-          </div>
+          </div> -->
         </div>
         <div class="card-footer">
           <button

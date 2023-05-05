@@ -5,8 +5,16 @@ import apiLibrary from '@/services/api-library.service';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Category from '../../enum/category.enum';
+import { useFetch } from '@/composables/useFetch';
+import { booksUrl } from '@/endpoints/book.endpoint';
+import { usersUrl } from '@/endpoints/user.endpoint';
+import type BookDto from '@/models/books/book.models';
+import type UserDto from '@/models/users/user.model';
 
 const router = useRouter()
+
+const {resource: books} = useFetch<BookDto[]>(booksUrl)
+const {resource: users} = useFetch<UserDto[]>(usersUrl)
 
 const library = ref<LibraryDto>({
       id: "",
@@ -37,7 +45,9 @@ const submitLibrary = (libraryDto: LibraryDto) => {
 <template>
 <LibraryForm
  form-name="Create"
+ :books="books"
  :initial-library="library"
+ :users="users"
  @on-back-to-list="backToList"
  @on-submit-library="submitLibrary"
 />
