@@ -17,7 +17,7 @@ const backToList = () => {
 }
 
 const submitAuthor = () => {
-      emit('onSubmitAuthor')
+      emit('onSubmitAuthor', author.value)
 }
 
 </script>

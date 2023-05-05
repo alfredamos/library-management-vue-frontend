@@ -16,7 +16,7 @@ const { authUser } = useAuthUser();
       <router-link class="nav-link" to="/books">Books</router-link>
     </li>
     <li class="nav-item">
-      <router-link class="nav-link" to="/book-categories"
+      <router-link class="nav-link" to="/categories"
         >Categories</router-link
       >
     </li>

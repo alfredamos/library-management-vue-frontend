@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useFetch } from "@/composables/useFetch";
 import { authorsUrl } from "../../endpoints/author.endpoint";
-import type AuthorDto from '../../models/authors/author.model';
+import type AuthorDto from "../../models/authors/author.model";
 import LinkButton from "@/utils/LinkButton.vue";
 
 const { resource: authors } = useFetch<AuthorDto[]>(authorsUrl);
@@ -25,15 +25,15 @@ const { resource: authors } = useFetch<AuthorDto[]>(authorsUrl);
             <tr v-for="author in authors" :key="author.id">
               <td>{{ author.name }}</td>
               <td>
-                 <LinkButton
+                <LinkButton
                   :link-to="`/edit-author/${author.id}`"
                   link-display="outline-warning"
-                  linkName="Edit"
+                  link-name="Edit"
                 />
                 <LinkButton
                   :link-to="`/delete-author/${author.id}`"
                   link-display="outline-danger"
-                  linkName="Delete"
+                  link-name="Delete"
                 />
               </td>
             </tr>
@@ -41,14 +41,19 @@ const { resource: authors } = useFetch<AuthorDto[]>(authorsUrl);
         </table>
       </div>
       <div class="card-footer">
-            <router-link to="/add-author" class="btn btn-outline-secondary form-control">Add Author</router-link>
+        <LinkButton
+          link-to="add-author"
+          link-display="outline-secondary"
+          link-name="Add Author"
+          :is-form-control="true"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.pado{
+.pado {
   padding: 10px;
 }
 </style>

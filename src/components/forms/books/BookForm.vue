@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BookDto from "@/models/books/book.models";
+import type BookDto from "@/models/books/book.models";
 import { ref } from "vue";
 import type AuthorDto from "../../../models/authors/author.model";
 import type BookCatDto from "../../../models/book-categories/book-category.model";
@@ -21,7 +21,7 @@ const backToList = () => {
 };
 
 const submitBook = () => {
-  emit("onSubmitBook");
+  emit("onSubmitBook", book.value);
 };
 </script>
 

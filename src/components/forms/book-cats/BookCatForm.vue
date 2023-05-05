@@ -1,29 +1,28 @@
 <script setup lang="ts">
-import BookCatDto from '@/models/book-categories/book-category.model';
-import { ref } from 'vue';
+import type BookCatDto from "@/models/book-categories/book-category.model";
+import { ref } from "vue";
 
-interface Props{
-      initialBookCat: BookCatDto;
-      formName: string;
+interface Props {
+  initialBookCat: BookCatDto;
+  formName: string;
 }
-const {initialBookCat, formName} = defineProps<Props>()
+const { initialBookCat, formName } = defineProps<Props>();
 
-const emit = defineEmits(['onBackToList', 'onSubmitBookCat'])
+const emit = defineEmits(["onBackToList", "onSubmitBookCat"]);
 
-const bookCat = ref<BookCatDto>(initialBookCat)
+const bookCat = ref<BookCatDto>(initialBookCat);
 
 const backToList = () => {
-      emit('onBackToList')
-}
+  emit("onBackToList");
+};
 
 const submitBookCat = () => {
-      emit('onSubmitBookCat')
-}
-
+  emit("onSubmitBookCat", bookCat.value);
+};
 </script>
 
 <template>
-<div class="border pado mt-3">
+  <div class="border pado mt-3">
     <form @submit.prevent="submitBookCat">
       <div class="card">
         <div class="card-header">
@@ -39,7 +38,7 @@ const submitBookCat = () => {
               class="form-control"
             />
           </div>
-                  </div>
+        </div>
         <div class="card-footer">
           <button
             type="submit"
@@ -61,7 +60,7 @@ const submitBookCat = () => {
 </template>
 
 <style scoped>
-.pado{
-      padding: 10px;
+.pado {
+  padding: 10px;
 }
 </style>

@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import type BookDto from "../../../models/books/book.models";
 import type UserDto from "../../../models/users/user.model";
-import LibraryDto from "@/models/libraries/library.model";
+import type LibraryDto from "@/models/libraries/library.model";
 
 interface Props {
   books: BookDto[];
@@ -10,7 +10,7 @@ interface Props {
   formName: string;
   users: UserDto[];
 }
-const { initialLibrary, formName } = defineProps<Props>();
+const { books, formName, initialLibrary, users } = defineProps<Props>();
 
 const emit = defineEmits(["onBackToList", "onSubmitLibrary"]);
 
@@ -21,7 +21,7 @@ const backToList = () => {
 };
 
 const submitLibrary = () => {
-  emit("onSubmitLibrary");
+  emit("onSubmitLibrary", library.value);
 };
 </script>
 
@@ -35,12 +35,18 @@ const submitLibrary = () => {
         <div class="card-body">
           <div class="mb-3">
             <label for="name" class="form-label">Requester Category</label>
-            <input
+            <select
               id="name"
               v-model.trim="library.requesterCategory"
               type="text"
-              class="form-control"
-            />
+              class="form-select"
+            >
+            <option value="">Please select User Category</option>
+            <option value="Faculty">Faculty</option>
+            <option value="Others">Others</option>
+            <option value="Staff">Staff</option>
+            <option value="Student">Student</option>
+            </select>
           </div>
           <div class="mb-3">
             <label for="bookId" class="form-label">Book</label>
@@ -48,7 +54,7 @@ const submitLibrary = () => {
               id="bookId"
               v-model.trim="library.bookId"
               type="text"
-              class="form-control"
+              class="form-select"
             >
               <option value="">Please select book</option>
               <option v-for="book in books" :value="book.id" :key="book.id">
@@ -62,7 +68,7 @@ const submitLibrary = () => {
               id="userId"
               v-model.trim="library.userId"
               type="text"
-              class="form-control"
+              class="form-select"
             >
               <option value="">Please select user</option>
               <option v-for="user in users" :value="user.id" :key="user.id">

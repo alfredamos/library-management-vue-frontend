@@ -45,12 +45,12 @@ const { resource: books } = useFetch<ListBookDto[]>(bookUrl);
                 <LinkButton
                   :link-to="`/edit-book/${book.id}`"
                   link-display="outline-warning"
-                  linkName="Edit"
+                  link-name="Edit"
                 />
                 <LinkButton
                   :link-to="`/delete-book/${book.id}`"
                   link-display="outline-danger"
-                  linkName="Delete"
+                  link-name="Delete"
                 />
               </td>
             </tr>
@@ -58,11 +58,12 @@ const { resource: books } = useFetch<ListBookDto[]>(bookUrl);
         </table>
       </div>
       <div class="card-footer">
-        <router-link
-          to="/add-book"
-          class="btn btn-outline-secondary form-control"
-          >Add Book</router-link
-        >
+        <LinkButton
+          link-to="add-book"
+          link-display="outline-secondary"
+          link-name="Add Book"
+          :is-form-control="true"
+        />
       </div>
     </div>
   </div>

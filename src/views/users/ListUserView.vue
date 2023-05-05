@@ -38,12 +38,12 @@ const { resource: users } = useFetch<ListUserDto[]>(userUrl);
                 <LinkButton
                   :link-to="`/edit-user/${user.id}`"
                   link-display="outline-warning"
-                  linkName="Edit"
+                  link-name="Edit"
                 />
                 <LinkButton
                   :link-to="`/delete-user/${user.id}`"
                   link-display="outline-danger"
-                  linkName="Delete"
+                  link-name="Delete"
                 />
               </td>
             </tr>
@@ -51,9 +51,12 @@ const { resource: users } = useFetch<ListUserDto[]>(userUrl);
         </table>
       </div>
       <div class="card-footer">
-        <router-link to="/add-user" class="btn btn-outline-secondary form-control"
-          >Add User</router-link
-        >
+        <LinkButton
+          link-to="#"
+          link-display="outline-secondary"
+          linkName="Add User"
+          :is-form-control="true"
+        />
       </div>
     </div>
   </div>

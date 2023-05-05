@@ -17,7 +17,7 @@ const backToList = () => {
 };
 
 const submitDepartment = () => {
-  emit("onSubmitDepartment");
+  emit("onSubmitDepartment", department.value);
 };
 </script>
 

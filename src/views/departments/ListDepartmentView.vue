@@ -18,22 +18,24 @@ const { resource: departments } = useFetch<DepartmentDto[]>(departmentUrl);
           <thead>
             <tr>
               <th>Name</th>
+              <th>Faculty</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="department in departments" :key="department.id">
               <td>{{ department.name }}</td>
+              <td>{{ department.faculty }}</td>
               <td>
                 <LinkButton
                   :link-to="`/edit-department/${department.id}`"
                   link-display="outline-warning"
-                  linkName="Edit"
+                  link-name="Edit"
                 />
                 <LinkButton
                   :link-to="`/delete-department/${department.id}`"
                   link-display="outline-danger"
-                  linkName="Delete"
+                  link-name="Delete"
                 />
               </td>
             </tr>
@@ -41,9 +43,12 @@ const { resource: departments } = useFetch<DepartmentDto[]>(departmentUrl);
         </table>
       </div>
       <div class="card-footer">
-        <router-link to="/add-department" class="btn btn-outline-secondary form-control"
-          >Add Department</router-link
-        >
+        <LinkButton
+          link-to="add-department"
+          link-display="outline-secondary"
+          link-name="Add Department"
+          :is-form-control="true"
+        />
       </div>
     </div>
   </div>
