@@ -41,11 +41,11 @@ const submitLibrary = () => {
               type="text"
               class="form-select"
             >
-            <option value="">Please select User Category</option>
-            <option value="Faculty">Faculty</option>
-            <option value="Others">Others</option>
-            <option value="Staff">Staff</option>
-            <option value="Student">Student</option>
+              <option value="">Please select User Category</option>
+              <option value="Faculty">Faculty</option>
+              <option value="Others">Others</option>
+              <option value="Staff">Staff</option>
+              <option value="Student">Student</option>
             </select>
           </div>
           <div class="mb-3">
