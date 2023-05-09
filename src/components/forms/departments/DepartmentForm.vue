@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import type DepartmentDto from "@/models/departments/department.model";
+import TextInput from "@/utils/TextInput.vue";
+import TheButton from "@/utils/TheButton.vue";
 
 interface Props {
   initialDepartment: DepartmentDto;
@@ -29,39 +31,33 @@ const submitDepartment = () => {
           <h4 class="text-center">Department {{ formName }} Form</h4>
         </div>
         <div class="card-body">
-          <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input
-              id="name"
-              v-model.trim="department.name"
-              type="text"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="faculty" class="form-label">Faculty</label>
-            <input
-              id="faculty"
-              v-model.trim="department.faculty"
-              type="text"
-              class="form-control"
-            />
-          </div>
+          <text-input
+            id="name"
+            v-model="department.name"
+            label="Name"
+            type="text"
+          />
+          <text-input
+            id="faculty"
+            v-model="department.faculty"
+            label="Faculty"
+            type="text"
+          />          
         </div>
         <div class="card-footer">
-          <button
-            type="submit"
-            class="btn btn-outline-primary form-control m-1 fw-bold"
-          >
-            Submit
-          </button>
-          <button
+          <the-button
+            button-type="submit"
+            button-color="outline-primary"
+            button-name="Submit"
+            :is-form-control="true"
+          />
+          <the-button
+            button-type="button"
+            button-color="outline-secondary"
+            button-name="Back"
+            :is-form-control="true"
             @click="backToList"
-            type="button"
-            class="btn btn-outline-secondary form-control m-1 fw-bold"
-          >
-            Back
-          </button>
+          />
         </div>
       </div>
     </form>

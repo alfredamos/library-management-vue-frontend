@@ -7,7 +7,6 @@ class SignupDto {
   password!: string;
   confirmPassword!: string;
   userTyPe?: UserType;
-  dateOfBirth?: Date;
   departmentId!: string;
 }
 

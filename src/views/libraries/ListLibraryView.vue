@@ -28,7 +28,7 @@ const { resource: libraries } = useFetch<ListLibraryDto[]>(libraryUrl);
           </thead>
           <tbody>
             <tr v-for="library in libraries" :key="library.id">
-              <td>{{ library.user?.name }}</td>
+              <td><router-link class="no-text-deco" :to="`/detail-library/${library.id}`">{{ library.user?.name }}</router-link></td>
               <td>{{ library.book?.title }}</td>
               <td>{{ library.requesterCategory }}</td>
               <td>{{ moment(library.dateBookOut).format("MMMM DD YYYY") }}</td>
@@ -64,5 +64,9 @@ const { resource: libraries } = useFetch<ListLibraryDto[]>(libraryUrl);
 <style scoped>
 .pado {
   padding: 10px;
+}
+
+.no-text-deco {
+  text-decoration: none;
 }
 </style>

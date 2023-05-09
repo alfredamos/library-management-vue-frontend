@@ -28,18 +28,19 @@ const { resource: users } = useFetch<ListUserDto[]>(userUrl);
           </thead>
           <tbody>
             <tr v-for="user in users" :key="user.id">
-              <td>{{ user.name }}</td>
+              <td>
+                <router-link
+                  class="no-text-deco"
+                  :to="`/detail-user/${user.id}`"
+                  >{{ user.name }}</router-link
+                >
+              </td>
               <td>{{ user.email }}</td>
               <td>{{ user.phone }}</td>
               <td>{{ user.department?.name }}</td>
               <td>{{ user.department?.faculty }}</td>
               <td>{{ user.gender }}</td>
               <td>
-                <LinkButton
-                  :link-to="`/edit-user/${user.id}`"
-                  link-display="outline-warning"
-                  link-name="Edit"
-                />
                 <LinkButton
                   :link-to="`/delete-user/${user.id}`"
                   link-display="outline-danger"
@@ -63,7 +64,11 @@ const { resource: users } = useFetch<ListUserDto[]>(userUrl);
 </template>
 
 <style scoped>
-.pado{
+.pado {
   padding: 10px;
+}
+
+.no-text-deco {
+  text-decoration: none;
 }
 </style>

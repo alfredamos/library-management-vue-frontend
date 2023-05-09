@@ -24,7 +24,7 @@ const { resource: departments } = useFetch<DepartmentDto[]>(departmentUrl);
           </thead>
           <tbody>
             <tr v-for="department in departments" :key="department.id">
-              <td>{{ department.name }}</td>
+              <td><router-link class="no-text-deco" :to="`/detail-department/${department.id}`">{{ department.name }}</router-link></td>
               <td>{{ department.faculty }}</td>
               <td>
                 <LinkButton
@@ -57,5 +57,9 @@ const { resource: departments } = useFetch<DepartmentDto[]>(departmentUrl);
 <style scoped>
 .pado{
   padding: 10px;
+}
+
+.no-text-deco {
+  text-decoration: none;
 }
 </style>

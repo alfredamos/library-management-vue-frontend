@@ -1,33 +1,33 @@
 <script setup lang="ts">
 import { useFetch } from "@/composables/useFetch";
-import type AuthorDto from "@/models/authors/author.model";
-import { authorUrl } from "@/urls/author.url";
+import type DepartmentDto from "@/models/departments/department.model";
+import { departmentUrl } from "@/urls/department.url";
 import { useRoute} from "vue-router";
 import LinkButton from "@/utils/LinkButton.vue";
 
 const { id } = useRoute().params;
 
-const url = `${authorUrl}/${id}`;
+const url = `${departmentUrl}/${id}`;
 
-const { resource: author } = useFetch<AuthorDto>(url);
+const { resource: department } = useFetch<DepartmentDto>(url);
 </script>
 
 <template>
   <div class="border pado">
     <div class="card">
       <div class="card-header">
-        <h4 class="text-center">Author Detail</h4>
+        <h4 class="text-center">Department Detail</h4>
       </div>
       <div class="card-body">
         <ul class="list-group">
-          <li class="list-group-item">name: <strong>{{ author?.name }}</strong></li>
-          
+          <li class="list-group-item">name: <strong>{{ department?.name }}</strong></li>          
+          <li class="list-group-item">Faculty: <strong>{{ department?.faculty }}</strong></li>          
         </ul>
       </div>
       <div class="card-footer">
             <link-button
             link-name="Back"
-            link-to="/authors"
+            link-to="/departments"
             link-display="outline-secondary"
             :is-form-control="true"
           

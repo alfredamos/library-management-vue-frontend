@@ -23,7 +23,7 @@ const { resource: authors } = useFetch<AuthorDto[]>(authorsUrl);
           </thead>
           <tbody>
             <tr v-for="author in authors" :key="author.id">
-              <td>{{ author.name }}</td>
+              <td><router-link class="no-text-deco" :to="`/detail-author/${author.id}`" >{{ author.name }}</router-link></td>
               <td>
                 <LinkButton
                   :link-to="`/edit-author/${author.id}`"
@@ -55,5 +55,9 @@ const { resource: authors } = useFetch<AuthorDto[]>(authorsUrl);
 <style scoped>
 .pado {
   padding: 10px;
+}
+
+.no-text-deco{
+  text-decoration: none;
 }
 </style>

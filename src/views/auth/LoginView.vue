@@ -8,7 +8,7 @@ import LoginForm from "@/components/forms/auth/LoginForm.vue";
 const router = useRouter();
 
 const loginSubmit = (loginDto: LoginDto) => {
-
+  console.log("in login, loginDto : ", loginDto);
   ApiAuth.login(loginDto)
     .then((resp) => {
       apiContext.login(resp.data);

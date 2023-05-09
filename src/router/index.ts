@@ -1,25 +1,31 @@
 import { createRouter, createWebHistory } from "vue-router";
 import ListLibraryView from "@/views/libraries/ListLibraryView.vue";
-import AddLibraryView from "@/views/libraries/AddLibraryView.vue"
-import EditLibraryView from "@/views/libraries/EditLibraryView.vue"
+import AddLibraryView from "@/views/libraries/AddLibraryView.vue";
+import DetailLibraryView from "@/views/libraries/DEtailLibraryView.vue"
+import EditLibraryView from "@/views/libraries/EditLibraryView.vue";
 
 import ListAuthorView from "@/views/authors/ListAuthorView.vue";
 import AddAuthorView from "@/views/authors/AddAuthorView.vue";
+import DetailAuthorView from "@/views/authors/DetailAuthorView.vue";
 import EditAuthorView from "@/views/authors/EditAuthorView.vue";
 
 import ListBookCatView from "@/views/book-cats/ListBookCatView.vue";
-import AddBookCatView from "@/views/book-cats/AddBookCatView.vue"
+import AddBookCatView from "@/views/book-cats/AddBookCatView.vue";
 import EditBookCatView from "@/views/book-cats/EditBookCatView.vue";
+import DetailBookCatView from "@/views/book-cats/DetailBookCatView.vue";
 
 import ListBookView from "@/views/books/ListBookView.vue";
-import AddBookView from "@/views/books/AddBookView.vue"
-import EditBookView from "@/views/books/EditBookView.vue"
+import AddBookView from "@/views/books/AddBookView.vue";
+import DetailBookView from "@/views/books/DetailBookView.vue";
+import EditBookView from "@/views/books/EditBookView.vue";
 
 import ListDepartmentView from "@/views/departments/ListDepartmentView.vue";
 import AddDepartmentView from "@/views/departments/AddDepartmentView.vue";
+import DetailDepartmentView from "@/views/departments/DetailDepartmentView.vue";
 import EditDepartmentView from "@/views/departments/EditDepartmentView.vue";
 
 import ListUserView from "@/views/users/ListUserView.vue";
+import DetailUserView from "@/views/users/DetailUserView.vue"
 
 import LoginView from "@/views/auth/LoginView.vue";
 import LogoutView from "@/views/auth/LogoutView.vue";
@@ -32,15 +38,17 @@ import { apiContext } from "@/behavior-subject/auth-context.rxjs";
 import { tap } from "rxjs";
 import { ref } from "vue";
 import type AuthUserDto from "@/models/auth/auth-user.model";
-import { initialAuthUser } from '../utils/authUser-initial.util';
+import { initialAuthUser } from "../utils/authUser-initial.util";
 
-const authUser = ref<AuthUserDto>(initialAuthUser)
+const authUser = ref<AuthUserDto>(initialAuthUser);
 
-apiContext.authUser$.pipe(
-  tap(autUser => {
-    authUser.value = autUser
-  })
-).subscribe()
+apiContext.authUser$
+  .pipe(
+    tap((autUser) => {
+      authUser.value = autUser;
+    })
+  )
+  .subscribe();
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -55,6 +63,12 @@ const router = createRouter({
       path: "/add-library",
       name: "add-library",
       component: AddLibraryView,
+      meta: { needsAuth: true },
+    },
+    {
+      path: "/detail-library/:id",
+      name: "detail-library",
+      component: DetailLibraryView,
       meta: { needsAuth: true },
     },
     {
@@ -85,7 +99,7 @@ const router = createRouter({
     {
       path: "/detail-author/:id",
       name: "detail-author",
-      component: AddAuthorView,
+      component: DetailAuthorView,
       meta: { needsAuth: true },
     },
     {
@@ -108,6 +122,12 @@ const router = createRouter({
       meta: { needsAuth: true },
     },
     {
+      path: "/detail-book/:id",
+      name: "detail-book",
+      component: DetailBookView,
+      meta: { needsAuth: true },
+    },
+    {
       path: "/edit-book/:id",
       name: "edit-book",
       component: EditBookView,
@@ -124,6 +144,12 @@ const router = createRouter({
       path: "/add-category",
       name: "add-category",
       component: AddBookCatView,
+      meta: { needsAuth: true },
+    },
+    {
+      path: "/detail-category/:id",
+      name: "detail-category",
+      component: DetailBookCatView,
       meta: { needsAuth: true },
     },
     {
@@ -146,6 +172,12 @@ const router = createRouter({
       meta: { needsAuth: true },
     },
     {
+      path: "/detail-department/:id",
+      name: "detail-department",
+      component: DetailDepartmentView,
+      meta: { needsAuth: true },
+    },
+    {
       path: "/edit-department/:id",
       name: "edit-department",
       component: EditDepartmentView,
@@ -156,6 +188,12 @@ const router = createRouter({
       path: "/users",
       name: "users",
       component: ListUserView,
+      meta: { needsAuth: true },
+    },
+    {
+      path: "/detail-user/:id",
+      name: "detail-user",
+      component: DetailUserView,
       meta: { needsAuth: true },
     },
 
@@ -201,8 +239,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.needsAuth && !authUser.value.isLoggedIn) next({name: 'login'})
-  else next()
-})
+  if (to.meta.needsAuth && !authUser.value.isLoggedIn) next({ name: "login" });
+  else next();
+});
 
 export default router;

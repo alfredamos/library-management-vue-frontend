@@ -1,12 +1,21 @@
 <script lang="ts" setup>
 import type EditProfileDto from "@/models/auth/edit-profile.model";
 import { ref } from "vue";
+import TextInput from "@/utils/TextInput.vue";
+import SelectInput from "@/utils/SelectInput.vue";
+import { useFetch } from "@/composables/useFetch";
+import { departmentUrl } from "@/urls/department.url";
+import GenderLoad from "@/models/utils/gender-load.util";
+import TheButton from "@/utils/TheButton.vue";
 
 interface Props {
   oldProfile: EditProfileDto;
 }
 
-const { oldProfile} = defineProps<Props>();
+const { oldProfile } = defineProps<Props>();
+
+const { resource: departments } = useFetch(departmentUrl);
+
 const emit = defineEmits(["onBackToList", "onEditProfileSubmit"]);
 
 const editProfile = ref<EditProfileDto>(oldProfile);
@@ -28,77 +37,67 @@ const submitEditProfile = () => {
           <h4 class="text-center">Edit Profile Form</h4>
         </div>
         <div class="card-body">
-          <div class="mb-3">
-            <label for="fullName" class="form-label">Name</label>
-            <input
-              id="fullName"
-              type="text"
-              v-model="editProfile.name"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input
-              id="email"
-              type="email"
-              v-model="editProfile.email"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="phone" class="form-label">Phone</label>
-            <input
-              id="phone"
-              type="tel"
-              v-model="editProfile.phone"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input
-              id="password"
-              type="password"
-              v-model="editProfile.password"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="newPassword" class="form-label">New Password</label>
-            <input
-              id="newPassword"
-              type="password"
-              v-model="editProfile.newPassword"
-              class="form-control"
-            />
-          </div>          
-          <div class="mb-3">
-            <label for="gender" class="form-label">Gender</label>
-            <select
-              id="gender"
-              v-model="editProfile.gender"
-              class="form-select"
-            >
-              <option value="Female">Female</option>
-              <option value="Male">Male</option>
-            </select>
-          </div>
+          <text-input
+            id="name"
+            v-model="editProfile.name"
+            label="Name"
+            type="text"
+          />
+          <text-input
+            id="email"
+            v-model="editProfile.email"
+            label="Email"
+            type="email"
+          />
+          <text-input
+            id="phone"
+            v-model="editProfile.phone"
+            label="Phone"
+            type="tel"
+          />
+          <text-input
+            id="password"
+            v-model="editProfile.password"
+            label="Password"
+            type="password"
+          />
+          <text-input
+            id="newPassword"
+            v-model="editProfile.newPassword"
+            label="New Password"
+            type="password"
+          />
+          <select-input
+            v-if="GenderLoad"
+            id="gender"
+            v-model="editProfile.gender"
+            label="Gender"
+            :values="GenderLoad"
+            :property="'gender'"
+          />
+          <select-input
+            v-if="departments"
+            id="departmentId"
+            v-model="editProfile.departmentId"
+            label="Department"
+            :values="departments"
+            :property="'name'"
+          />
         </div>
         <div class="card-footer">
-          <button
-            type="submit"
-            class="btn btn-outline-primary form-control m-1 fw-bold"
-          >
-            Submit
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-secondary form-control m-1 fw-bold"
+          <the-button
+            button-type="submit"
+            button-color="outline-primary"
+            button-name="Submit"
+            :is-form-control="true"
+          />
+          <the-button
+            button-type="button"
+            button-color="outline-secondary"
+            button-name="Back"
+            :is-form-control="true"
             @click="backToList"
-          >
-            Cancel
-          </button>
+          />          
         </div>
       </div>
     </form>

@@ -6,6 +6,7 @@ class EditProfileDto {
   phone!: string;
   gender!: Gender; 
   password!: string;
+  departmentId?:string;
   newPassword!: string;
   userTyPe?: UserType;
 }

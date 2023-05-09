@@ -2,6 +2,7 @@
 import type LoginDto from "@/models/auth/login.model";
 import { ref } from "vue";
 import TextInput from "@/utils/TextInput.vue";
+import TheButton from "@/utils/TheButton.vue";
 
 const login = ref<LoginDto>({
   email: "",
@@ -28,41 +29,46 @@ const backToList = () => {
           <h4 class="text-center">Login Form</h4>
         </div>
         <div class="card-body">
-          <text-input v-model="login.email" label="Email" />
-          <text-input v-model="login.password" label="Password" />
-          <!-- <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input
-              id="email"
-              v-model.trim="login.email"
-              type="text"
-              class="form-control"
-            />
-          </div> -->
-          <!-- <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input
-              v-model.trim="login.password"
-              id="password"
-              type="password"
-              class="form-control"
-            />
-          </div> -->
+          <text-input
+            id="email"
+            v-model="login.email"
+            label="Email"
+            type="email"
+          />
+          <text-input
+            id="password"
+            v-model="login.password"
+            label="Password"
+            type="password"
+          />          
         </div>
         <div class="card-footer">
-          <button
+          <!-- <button
             type="submit"
             class="btn btn-outline-primary form-control m-1 fw-bold"
           >
             Submit
-          </button>
-          <button
+          </button> -->
+          <the-button
+          button-type="submit"
+          button-color="outline-primary"
+          button-name="Submit"
+          :is-form-control="true"
+          />
+          <the-button
+          button-type="button"
+          button-color="outline-secondary"
+          button-name="Back"
+          :is-form-control="true"
+           @click="backToList"
+          />
+          <!-- <button
             @click="backToList"
             type="button"
             class="btn btn-outline-secondary form-control m-1 fw-bold"
           >
             Back
-          </button>
+          </button> -->
         </div>
       </div>
     </form>

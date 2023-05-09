@@ -1,9 +1,13 @@
 <script setup lang="ts">
 interface Props {
-  modelValue: string;
+  modelValue: any;
   label: string;
+  type: any;
+  id: any;
 }
-const { modelValue, label } = defineProps<Props>();
+const { modelValue, label, type, id } = defineProps<Props>();
+console.log("type : type : ", type);
+console.log("id : id : ", id);
 
 const emit = defineEmits(["update:modelValue"]);
 
@@ -13,13 +17,13 @@ const handleInput = ($event: any) => {
 </script>
 <template>
   <div class="mb-3">
-    <label for="modelValue" class="form-label">{{ label }}</label>
+    <label :for="id" class="form-label">{{ label }}</label>
     <input
-      id="modelValue"
+      :id="id"
       :value="modelValue"
       @input="handleInput"
-      type="text"
       class="form-control"
+      :type="type"
     />
   </div>
 </template>

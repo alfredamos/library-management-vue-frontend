@@ -1,59 +1,57 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import type AuthorDto from '@/models/authors/author.model';
+import { ref } from "vue";
+import type AuthorDto from "@/models/authors/author.model";
+import TextInput from "@/utils/TextInput.vue";
+import TheButton from "@/utils/TheButton.vue";
 
-interface Props{
-      initialAuthor: AuthorDto;
-      formName: string;
+interface Props {
+  initialAuthor: AuthorDto;
+  formName: string;
 }
-const {initialAuthor, formName} = defineProps<Props>()
+const { initialAuthor, formName } = defineProps<Props>();
 
-const emit = defineEmits(['onBackToList', 'onSubmitAuthor'])
+const emit = defineEmits(["onBackToList", "onSubmitAuthor"]);
 
-const author = ref<AuthorDto>(initialAuthor)
+const author = ref<AuthorDto>(initialAuthor);
 
 const backToList = () => {
-      emit('onBackToList')
-}
+  emit("onBackToList");
+};
 
 const submitAuthor = () => {
-      emit('onSubmitAuthor', author.value)
-}
-
+  emit("onSubmitAuthor", author.value);
+};
 </script>
 
 <template>
-<div class="border pado mt-3">
+  <div class="border pado mt-3">
     <form @submit.prevent="submitAuthor">
       <div class="card">
         <div class="card-header">
           <h4 class="text-center">Author {{ formName }} Form</h4>
         </div>
         <div class="card-body">
-          <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input
-              id="name"
-              v-model.trim="author.name"
-              type="text"
-              class="form-control"
-            />
-          </div>
-                  </div>
+          <text-input
+            id="name"
+            v-model="author.name"
+            label="Name"
+            type="text"
+          />
+        </div>
         <div class="card-footer">
-          <button
-            type="submit"
-            class="btn btn-outline-primary form-control m-1 fw-bold"
-          >
-            Submit
-          </button>
-          <button
+          <the-button
+            button-type="submit"
+            button-color="outline-primary"
+            button-name="Submit"
+            :is-form-control="true"
+          />
+          <the-button
+            button-type="button"
+            button-color="outline-secondary"
+            button-name="Back"
+            :is-form-control="true"
             @click="backToList"
-            type="button"
-            class="btn btn-outline-secondary form-control m-1 fw-bold"
-          >
-            Back
-          </button>
+          />
         </div>
       </div>
     </form>
@@ -61,7 +59,7 @@ const submitAuthor = () => {
 </template>
 
 <style scoped>
-.pado{
-      padding: 10px;
+.pado {
+  padding: 10px;
 }
 </style>

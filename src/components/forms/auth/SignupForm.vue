@@ -1,9 +1,15 @@
 <script lang="ts" setup>
 import { ref } from "vue";
+import TextInput from "@/utils/TextInput.vue";
+import SelectInput from "@/utils/SelectInput.vue";
 import Gender from "@/enum/gender.enum";
 import type SignupDto from "@/models/auth/signup.model";
+import { useFetch } from "../../../composables/useFetch";
+import { departmentUrl } from "../../../urls/department.url";
+import GenderLoad from "@/models/utils/gender-load.util";
+import TheButton from "@/utils/TheButton.vue";
 
-
+const { resource: departments } = useFetch(departmentUrl);
 
 const emit = defineEmits(["onBackToList", "onSignupSubmit"]);
 
@@ -11,13 +17,10 @@ const signup = ref<SignupDto>({
   name: "",
   email: "",
   phone: "",
-  dateOfBirth: new Date(),
   gender: Gender.Male,
   password: "",
   confirmPassword: "",
-  departmentId: ""
-
-  
+  departmentId: "",
 });
 
 const backToList = () => {
@@ -37,78 +40,67 @@ const submitSignup = () => {
           <h4 class="text-center">Signup Form</h4>
         </div>
         <div class="card-body">
-          <div class="mb-3">
-            <label for="fullName" class="form-label">Name</label>
-            <input
-            id="fullName"
-              type="text"
-              v-model.trim="signup.name"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input
+          <text-input
+            id="name"
+            v-model="signup.name"
+            label="Name"
+            type="text"
+          />
+          <text-input
             id="email"
-              type="email"
-              v-model.trim="signup.email"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="phone" class="form-label">Phone</label>
-            <input
+            v-model="signup.email"
+            label="Email"
+            type="email"
+          />
+          <text-input
             id="phone"
-              type="tel"
-              v-model.trim="signup.phone"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input
+            v-model="signup.phone"
+            label="Phone"
+            type="phone"
+          />
+          <text-input
             id="password"
-              type="password"
-              v-model.trim="signup.password"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="confirmPassword" class="form-label">Confirm Password</label>
-            <input
+            v-model="signup.password"
+            label="Password"
+            type="password"
+          />
+          <text-input
             id="confirmPassword"
-              type="password"
-              v-model.trim="signup.confirmPassword"
-              class="form-control"
-            />
-          </div>          
-          <div class="mb-3">
-            <label for="gender" class="form-label">Gender</label>
-            <select
-              id="gender"
-              v-model="signup.gender"
-              class="form-select"
-            >
-              <option value="Female">Female</option>
-              <option value="Male">Male</option>
-            </select>
-          </div>
-          
+            v-model="signup.confirmPassword"
+            label="Confirm Password"
+            type="password"
+          />
+          <select-input
+            v-if="GenderLoad"
+            id="gender"
+            v-model="signup.gender"
+            label="Gender"
+            :values="GenderLoad"
+            :property="'gender'"
+          />
+          <select-input
+            v-if="departments"
+            id="departmentId"
+            v-model="signup.departmentId"
+            label="Department"
+            :values="departments"
+            :property="'name'"
+          />          
         </div>
         <div class="card-footer">
-          <button
-            type="submit"
-            class="btn btn-outline-primary form-control m-1 fw-bold"
-          >
-            Submit
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-secondary form-control m-1 fw-bold"
+          <the-button
+            button-type="submit"
+            button-color="outline-primary"
+            button-name="Submit"
+            :is-form-control="true"
+          />
+          <the-button
+            button-type="button"
+            button-color="outline-secondary"
+            button-name="Back"
+            :is-form-control="true"
             @click="backToList"
-          >
-            Cancel
-          </button>
+          />
         </div>
       </div>
     </form>

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type BookCatDto from "@/models/book-categories/book-category.model";
 import { ref } from "vue";
+import TextInput from "@/utils/TextInput.vue";
+import TheButton from "@/utils/TheButton.vue";
 
 interface Props {
   initialBookCat: BookCatDto;
@@ -29,30 +31,27 @@ const submitBookCat = () => {
           <h4 class="text-center">Book Category {{ formName }} Form</h4>
         </div>
         <div class="card-body">
-          <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input
-              id="name"
-              v-model.trim="bookCat.name"
-              type="text"
-              class="form-control"
-            />
-          </div>
+          <text-input
+            id="name"
+            v-model="bookCat.name"
+            label="Name"
+            type="text"
+          />          
         </div>
         <div class="card-footer">
-          <button
-            type="submit"
-            class="btn btn-outline-primary form-control m-1 fw-bold"
-          >
-            Submit
-          </button>
-          <button
+         <the-button
+            button-type="submit"
+            button-color="outline-primary"
+            button-name="Submit"
+            :is-form-control="true"
+          />
+          <the-button
+            button-type="button"
+            button-color="outline-secondary"
+            button-name="Back"
+            :is-form-control="true"
             @click="backToList"
-            type="button"
-            class="btn btn-outline-secondary form-control m-1 fw-bold"
-          >
-            Back
-          </button>
+          />
         </div>
       </div>
     </form>

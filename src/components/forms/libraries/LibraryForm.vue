@@ -3,6 +3,9 @@ import { ref } from "vue";
 import type BookDto from "../../../models/books/book.models";
 import type UserDto from "../../../models/users/user.model";
 import type LibraryDto from "@/models/libraries/library.model";
+import RequestorCategory from "@/models/utils/requestor-load";
+import SelectInput from "@/utils/SelectInput.vue";
+import TheButton from "@/utils/TheButton.vue";
 
 interface Props {
   books: BookDto[];
@@ -33,64 +36,45 @@ const submitLibrary = () => {
           <h4 class="text-center">Library {{ formName }} Form</h4>
         </div>
         <div class="card-body">
-          <div class="mb-3">
-            <label for="name" class="form-label">Requester Category</label>
-            <select
-              id="name"
-              v-model.trim="library.requesterCategory"
-              type="text"
-              class="form-select"
-            >
-              <option value="">Please select User Category</option>
-              <option value="Faculty">Faculty</option>
-              <option value="Others">Others</option>
-              <option value="Staff">Staff</option>
-              <option value="Student">Student</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="bookId" class="form-label">Book</label>
-            <select
-              id="bookId"
-              v-model.trim="library.bookId"
-              type="text"
-              class="form-select"
-            >
-              <option value="">Please select book</option>
-              <option v-for="book in books" :value="book.id" :key="book.id">
-                {{ book.title }}
-              </option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="userId" class="form-label">User</label>
-            <select
-              id="userId"
-              v-model.trim="library.userId"
-              type="text"
-              class="form-select"
-            >
-              <option value="">Please select user</option>
-              <option v-for="user in users" :value="user.id" :key="user.id">
-                {{ user.name }}
-              </option>
-            </select>
-          </div>
+          <select-input
+            v-if="RequestorCategory"
+            id="requesterCategory"
+            v-model="library.requesterCategory"
+            label="Requestor Category"
+            :values="RequestorCategory"
+            :property="'category'"
+          />
+          <select-input
+            v-if="books"
+            id="bookId"
+            v-model="library.bookId"
+            label="Book"
+            :values="books"
+            :property="'title'"
+          />
+          <select-input
+            v-if="users"
+            id="userId"
+            v-model="library.userId"
+            label="User"
+            :values="users"
+            :property="'name'"
+          />
         </div>
         <div class="card-footer">
-          <button
-            type="submit"
-            class="btn btn-outline-primary form-control m-1 fw-bold"
-          >
-            Submit
-          </button>
-          <button
+          <the-button
+            button-type="submit"
+            button-color="outline-primary"
+            button-name="Submit"
+            :is-form-control="true"
+          />
+          <the-button
+            button-type="button"
+            button-color="outline-secondary"
+            button-name="Back"
+            :is-form-control="true"
             @click="backToList"
-            type="button"
-            class="btn btn-outline-secondary form-control m-1 fw-bold"
-          >
-            Back
-          </button>
+          />
         </div>
       </div>
     </form>

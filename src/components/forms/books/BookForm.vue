@@ -3,6 +3,9 @@ import type BookDto from "@/models/books/book.models";
 import { ref } from "vue";
 import type AuthorDto from "../../../models/authors/author.model";
 import type BookCatDto from "../../../models/book-categories/book-category.model";
+import TextInput from "@/utils/TextInput.vue";
+import SelectInput from "@/utils/SelectInput.vue";
+import TheButton from "@/utils/TheButton.vue";
 
 interface Props {
   authors: AuthorDto[];
@@ -33,122 +36,74 @@ const submitBook = () => {
           <h4 class="text-center">Book {{ formName }} Form</h4>
         </div>
         <div class="card-body">
-          <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input
-              id="title"
-              v-model.trim="book.title"
-              type="text"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="isbn" class="form-label">ISBN</label>
-            <input
-              id="isbn"
-              v-model.trim="book.isbn"
-              type="text"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="edition" class="form-label">Edition</label>
-            <input
-              id="edition"
-              v-model.trim="book.edition"
-              type="text"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="volume" class="form-label">Volume</label>
-            <input
-              id="volume"
-              v-model.trim="book.volume"
-              type="text"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="publisher" class="form-label">Publisher</label>
-            <input
-              id="publisher"
-              v-model.trim="book.publisher"
-              type="text"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="quantity" class="form-label">Quantity</label>
-            <input
-              id="quantity"
-              v-model.number="book.quantity"
-              type="number"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="dateOfPublication" class="form-label"
-              >Publication Date</label
-            >
-            <input
-              id="dateOfPublication"
-              v-model.date="book.dateOfPublication"
-              type="date"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="authorId" class="form-label">Author</label>
-            <select
-              id="authorId"
-              v-model.trim="book.authorId"
-              type="text"
-              class="form-select"
-            >
-              <option value="">Please select author</option>
-              <option
-                v-for="author in authors"
-                :value="author.id"
-                :key="author.id"
-              >
-                {{ author.name }}
-              </option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="bookCatId" class="form-label">Book Category</label>
-            <select
-              id="bookCatId"
-              v-model.trim="book.bookCatId"
-              type="text"
-              class="form-select"
-            >
-              <option value="">Please select book category</option>
-              <option
-                v-for="category in categories"
-                :value="category.id"
-                :key="category.id"
-              >
-                {{ category.name }}
-              </option>
-            </select>
-          </div>
+          <text-input
+            id="title"
+            v-model="book.title"
+            label="Title"
+            type="text"
+          />
+          <text-input id="isbn" v-model="book.isbn" label="ISBN" type="text" />
+          <text-input
+            id="edition"
+            v-model="book.edition"
+            label="Edition"
+            type="text"
+          />
+          <text-input
+            id="volume"
+            v-model="book.volume"
+            label="Volume"
+            type="text"
+          />
+          <text-input
+            id="publisher"
+            v-model="book.publisher"
+            label="Publisher"
+            type="text"
+          />
+          <text-input
+            id="quantity"
+            v-model.number="book.quantity"
+            label="Quantity"
+            type="number"
+          />
+          <text-input
+            id="dateOfPublication"
+            v-model="book.dateOfPublication"
+            label="Publication Date"
+            type="date"
+          />
+          <select-input
+            v-if="authors"
+            id="authorId"
+            v-model="book.authorId"
+            label="Author"
+            :values="authors"
+            :property="'name'"
+          />
+          <select-input
+            v-if="categories"
+            id="bookCatId"
+            v-model="book.bookCatId"
+            label="Book Category"
+            :values="categories"
+            :property="'name'"
+          />
         </div>
         <div class="card-footer">
-          <button
-            type="submit"
-            class="btn btn-outline-primary form-control m-1 fw-bold"
-          >
-            Submit
-          </button>
-          <button
+          <the-button
+            button-type="submit"
+            button-color="outline-primary"
+            button-name="Submit"
+            :is-form-control="true"
+          />
+          <the-button
+            button-type="button"
+            button-color="outline-secondary"
+            button-name="Back"
+            :is-form-control="true"
             @click="backToList"
-            type="button"
-            class="btn btn-outline-secondary form-control m-1 fw-bold"
-          >
-            Back
-          </button>
+          />
         </div>
       </div>
     </form>

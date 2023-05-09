@@ -45,6 +45,7 @@ const submitLibrary = (libraryDto: LibraryDto) => {
 <template>
 <LibraryForm
  form-name="Create"
+ v-if="books && users"
  :books="books"
  :initial-library="library"
  :users="users"

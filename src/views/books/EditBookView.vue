@@ -9,15 +9,14 @@ import { booksUrl } from "../../endpoints/book.endpoint";
 import { authorsUrl } from "@/endpoints/author.endpoint";
 import type AuthorDto from "@/models/authors/author.model";
 import { bookCatUrl } from "@/urls/book-category.url";
-import type BookCatDto from '../../models/book-categories/book-category.model';
+import type BookCatDto from "../../models/book-categories/book-category.model";
 
 const router = useRouter();
 const id = useRoute().params.id as string;
 const url = `${booksUrl}/${id}`;
 
-const {resource: authors} = useFetch<AuthorDto[]>(authorsUrl)
-const {resource: categories} = useFetch<BookCatDto[]>(bookCatUrl)
-
+const { resource: authors } = useFetch<AuthorDto[]>(authorsUrl);
+const { resource: categories } = useFetch<BookCatDto[]>(bookCatUrl);
 
 const { resource: book } = useFetch(url);
 
@@ -40,7 +39,7 @@ const submitBook = (bookDto: BookDto) => {
 
 <template>
   <BookForm
-    v-if="book"
+    v-if="book && authors && categories"
     form-name="Edit"
     :authors="authors"
     :initial-book="book"

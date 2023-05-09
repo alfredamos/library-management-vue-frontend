@@ -23,7 +23,13 @@ const { resource: bookCats } = useFetch<BookCatDto[]>(bookCatUrl);
           </thead>
           <tbody>
             <tr v-for="category in bookCats" :key="category.id">
-              <td>{{ category.name }}</td>
+              <td>
+                <router-link
+                  class="no-text-deco"
+                  :to="`/detail-category/${category.id}`"
+                  >{{ category.name }}</router-link
+                >
+              </td>
               <td>
                 <LinkButton
                   :link-to="`/edit-category/${category.id}`"
@@ -53,7 +59,11 @@ const { resource: bookCats } = useFetch<BookCatDto[]>(bookCatUrl);
 </template>
 
 <style scoped>
-.pado{
+.pado {
   padding: 10px;
+}
+
+.no-text-deco {
+  text-decoration: none;
 }
 </style>

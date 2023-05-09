@@ -51,6 +51,7 @@ const submitBook = (bookDto: BookDto) => {
 
 <template>
 <BookForm
+v-if="authors && categories"
  form-name="Create"
  :authors="authors" 
  :initial-book="book" 

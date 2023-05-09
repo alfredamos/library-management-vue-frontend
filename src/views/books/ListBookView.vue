@@ -32,14 +32,22 @@ const { resource: books } = useFetch<ListBookDto[]>(bookUrl);
           </thead>
           <tbody>
             <tr v-for="book in books" :key="book.id">
-              <td>{{ book.isbn }}</td>
+              <td>
+                <router-link
+                  class="no-text-deco"
+                  :to="`/detail-book/${book.id}`"
+                  >{{ book.isbn }}</router-link
+                >
+              </td>
               <td>{{ book.title }}</td>
               <td>{{ book.author?.name }}</td>
               <td>{{ book.category?.name }}</td>
               <td>{{ book.publisher }}</td>
               <td>{{ book.edition }}</td>
               <td>{{ book.volume }}</td>
-              <td>{{ moment(book.dateOfPublication).format("MMMM DD YYYY") }}</td>
+              <td>
+                {{ moment(book.dateOfPublication).format("MMMM DD YYYY") }}
+              </td>
               <td>{{ book.quantity }}</td>
               <td>
                 <LinkButton
@@ -72,5 +80,9 @@ const { resource: books } = useFetch<ListBookDto[]>(bookUrl);
 <style scoped>
 .pado {
   padding: 10px;
+}
+
+.no-text-deco {
+  text-decoration: none;
 }
 </style>

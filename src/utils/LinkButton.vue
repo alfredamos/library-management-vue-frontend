@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed} from "vue";
+import { computed } from "vue";
 
 interface Props {
   linkTo: string;
@@ -10,10 +10,13 @@ interface Props {
 
 const { linkDisplay, linkName, linkTo, isFormControl } = defineProps<Props>();
 
-const clsDisplay = `btn btn btn-${linkDisplay} m-1 fw-bold`
+const clsDisplay = `btn btn btn-${linkDisplay} m-1 fw-bold`;
 
 const display = computed(() => {
-  return !isFormControl?  clsDisplay : `${clsDisplay} form-control`;
+  const buttonClasses = !isFormControl
+    ? clsDisplay
+    : `${clsDisplay} form-control`;
+  return { [buttonClasses]: true };
 });
 </script>
 

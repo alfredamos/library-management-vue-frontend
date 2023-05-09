@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import type ChangePasswordDto from "@/models/auth/change-password.model";
 import { ref } from "vue";
+import TextInput from "@/utils/TextInput.vue";
+import TheButton from '@/utils/TheButton.vue';
 
-interface Props{
+interface Props {
   oldAuthInfo: ChangePasswordDto;
 }
 
-const {oldAuthInfo} = defineProps<Props>()
+const { oldAuthInfo } = defineProps<Props>();
 
 const changePassword = ref<ChangePasswordDto>(oldAuthInfo);
 
@@ -30,57 +32,45 @@ const backToList = () => {
           <h4 class="text-center">Change Password Form</h4>
         </div>
         <div class="card-body">
-          <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input
-              id="email"
-              v-model.trim="changePassword.email"
-              type="text"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input
-              v-model.trim="changePassword.password"
-              id="password"
-              type="password"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="newPassword" class="form-label">New Password</label>
-            <input
-              v-model.trim="changePassword.newPassword"
-              id="newPassword"
-              type="password"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="confirmPassword" class="form-label">Confirm Password</label>
-            <input
-              v-model.trim="changePassword.confirmPassword"
-              id="confirmPassword"
-              type="password"
-              class="form-control"
-            />
-          </div>
+          <text-input
+            id="email"
+            v-model="changePassword.email"
+            label="Email"
+            type="email"
+          />
+          <text-input
+            id="password"
+            v-model="changePassword.password"
+            label="Password"
+            type="password"
+          />
+          <text-input
+            id="newPassword"
+            v-model="changePassword.newPassword"
+            label="New Password"
+            type="password"
+          />
+          <text-input
+            id="confirmPassword"
+            v-model="changePassword.confirmPassword"
+            label="Confirm Password"
+            type="password"
+          />
         </div>
         <div class="card-footer">
-          <button
-            type="submit"
-            class="btn btn-outline-primary form-control m-1 fw-bold"
-          >
-            Submit
-          </button>
-          <button
+          <the-button
+            button-type="submit"
+            button-color="outline-primary"
+            button-name="Submit"
+            :is-form-control="true"
+          />
+          <the-button
+            button-type="button"
+            button-color="outline-secondary"
+            button-name="Back"
+            :is-form-control="true"
             @click="backToList"
-            type="button"
-            class="btn btn-outline-secondary form-control m-1 fw-bold"
-          >
-            Back
-          </button>
+          />
         </div>
       </div>
     </form>
