@@ -3,11 +3,19 @@ import { useFetch } from "@/composables/useFetch";
 import { authorsUrl } from "../../endpoints/author.endpoint";
 import type AuthorDto from "../../models/authors/author.model";
 import LinkButton from "@/utils/LinkButton.vue";
+import SearchItem from "@/utils/SearchItem.vue";
 
 const { resource: authors } = useFetch<AuthorDto[]>(authorsUrl);
+
+const searchHandler = (searchItem: string) => {
+  //const searchAuthors = authors.value.;
+  console.log("search-item : ", searchItem);
+  //console.log("search-authors : ", searchAuthors);
+};
 </script>
 
 <template>
+  <search-item @on-search-item="searchHandler" />
   <div class="border pado">
     <div class="card">
       <div class="card-header">
@@ -23,7 +31,13 @@ const { resource: authors } = useFetch<AuthorDto[]>(authorsUrl);
           </thead>
           <tbody>
             <tr v-for="author in authors" :key="author.id">
-              <td><router-link class="no-text-deco" :to="`/detail-author/${author.id}`" >{{ author.name }}</router-link></td>
+              <td>
+                <router-link
+                  class="no-text-deco"
+                  :to="`/detail-author/${author.id}`"
+                  >{{ author.name }}</router-link
+                >
+              </td>
               <td>
                 <LinkButton
                   :link-to="`/edit-author/${author.id}`"
@@ -57,7 +71,7 @@ const { resource: authors } = useFetch<AuthorDto[]>(authorsUrl);
   padding: 10px;
 }
 
-.no-text-deco{
+.no-text-deco {
   text-decoration: none;
 }
 </style>

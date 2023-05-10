@@ -1,39 +1,39 @@
 <script setup lang="ts">
 import { useFetch } from "@/composables/useFetch";
-import type AuthorDto from "@/models/authors/author.model";
-import { authorUrl } from "@/urls/author.url";
+import type DepartmentDto from "@/models/departments/department.model";
+import { departmentUrl } from "@/urls/department.url";
 import { useRoute } from "vue-router";
 import LinkButton from "@/utils/LinkButton.vue";
 import DeleteItem from "@/utils/DeleteItem.vue";
 import TheButton from "@/utils/TheButton.vue";
 import { ref } from "vue";
-import apiAuthor from "@/services/api-author.service";
+import apiDepartment from "@/services/api-department.service";
 import router from "../../router/index";
 
 const id = useRoute().params.id as string;
 
-const url = `${authorUrl}/${id}`;
+const url = `${departmentUrl}/${id}`;
 
 const isDelete = ref<boolean>(false);
 const deleteMessage = ref("");
 
-const { resource: author } = useFetch<AuthorDto>(url);
+const { resource: department } = useFetch<DepartmentDto>(url);
 
 const deleteClick = () => {
   isDelete.value = true;
-  deleteMessage.value = `Do you want to delete author : ${author.value.name}?`;
+  deleteMessage.value = `Do you want to delete department : ${department.value.name}?`;
 };
 
-const deleteAuthor = (value: boolean) => {
+const deleteDepartment = (value: boolean) => {
   if (value) {
-    apiAuthor
+    apiDepartment
       .remove(id)
       .then((resp) => {
-        router.push("/authors");
+        router.push("/departments");
       })
       .catch((err) => console.log("error : ", err.message));
   }else{
-    router.push("/authors")
+    router.push("/departments")
   }
 };
 </script>
@@ -44,25 +44,28 @@ const deleteAuthor = (value: boolean) => {
     cancel-button="Cancel"
     submit-button="Delete"
     :delete-message="deleteMessage"
-    delete-title="Author DeleteConfirmation!"
-    @on-delete-item="deleteAuthor"
+    delete-title="Department DeleteConfirmation!"
+    @on-delete-item="deleteDepartment"
   />
   <div class="border pado">
     <div class="card">
       <div class="card-header">
-        <h4 class="text-center">Author Detail</h4>
+        <h4 class="text-center">Department Detail</h4>
       </div>
       <div class="card-body">
         <ul class="list-group">
           <li class="list-group-item">
-            name: <strong>{{ author?.name }}</strong>
+            name: <strong>{{ department?.name }}</strong>
+          </li>
+          <li class="list-group-item">
+            faculty: <strong>{{ department?.faculty }}</strong>
           </li>
         </ul>
       </div>
       <div class="card-footer">
         <link-button
           link-name="Back"
-          link-to="/authors"
+          link-to="/departments"
           link-display="outline-secondary"
           :is-form-control="true"
         />

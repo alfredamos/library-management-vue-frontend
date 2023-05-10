@@ -1,30 +1,36 @@
 import { createRouter, createWebHistory } from "vue-router";
 import ListLibraryView from "@/views/libraries/ListLibraryView.vue";
 import AddLibraryView from "@/views/libraries/AddLibraryView.vue";
-import DetailLibraryView from "@/views/libraries/DEtailLibraryView.vue"
+import DeleteLibraryView from "@/views/libraries/DeleteLibraryView.vue"
+import DetailLibraryView from "@/views/libraries/DetailLibraryView.vue"
 import EditLibraryView from "@/views/libraries/EditLibraryView.vue";
 
 import ListAuthorView from "@/views/authors/ListAuthorView.vue";
 import AddAuthorView from "@/views/authors/AddAuthorView.vue";
+import DeleteAuthorView from "@/views/authors/DeleteAuthorView.vue";
 import DetailAuthorView from "@/views/authors/DetailAuthorView.vue";
 import EditAuthorView from "@/views/authors/EditAuthorView.vue";
 
 import ListBookCatView from "@/views/book-cats/ListBookCatView.vue";
 import AddBookCatView from "@/views/book-cats/AddBookCatView.vue";
 import EditBookCatView from "@/views/book-cats/EditBookCatView.vue";
+import DeleteBookCatView from "@/views/book-cats/DeleteBookCatView.vue";
 import DetailBookCatView from "@/views/book-cats/DetailBookCatView.vue";
 
 import ListBookView from "@/views/books/ListBookView.vue";
 import AddBookView from "@/views/books/AddBookView.vue";
+import DeleteBookView from "@/views/books/DeleteBookView.vue";
 import DetailBookView from "@/views/books/DetailBookView.vue";
 import EditBookView from "@/views/books/EditBookView.vue";
 
 import ListDepartmentView from "@/views/departments/ListDepartmentView.vue";
 import AddDepartmentView from "@/views/departments/AddDepartmentView.vue";
+import DeleteDepartmentView from "@/views/departments/DeleteDepartmentView.vue";
 import DetailDepartmentView from "@/views/departments/DetailDepartmentView.vue";
 import EditDepartmentView from "@/views/departments/EditDepartmentView.vue";
 
 import ListUserView from "@/views/users/ListUserView.vue";
+import DeleteUserView from "@/views/users/DeleteUserView.vue"
 import DetailUserView from "@/views/users/DetailUserView.vue"
 
 import LoginView from "@/views/auth/LoginView.vue";
@@ -66,6 +72,12 @@ const router = createRouter({
       meta: { needsAuth: true },
     },
     {
+      path: "/delete-library/:id",
+      name: "delete-library",
+      component: DeleteLibraryView,
+      meta: { needsAuth: true },
+    },
+    {
       path: "/detail-library/:id",
       name: "detail-library",
       component: DetailLibraryView,
@@ -93,7 +105,7 @@ const router = createRouter({
     {
       path: "/delete-author/:id",
       name: "delete-author",
-      component: AddAuthorView,
+      component: DeleteAuthorView,
       meta: { needsAuth: true },
     },
     {
@@ -122,6 +134,12 @@ const router = createRouter({
       meta: { needsAuth: true },
     },
     {
+      path: "/delete-book/:id",
+      name: "delete-book",
+      component: DeleteBookView,
+      meta: { needsAuth: true },
+    },
+    {
       path: "/detail-book/:id",
       name: "detail-book",
       component: DetailBookView,
@@ -144,6 +162,12 @@ const router = createRouter({
       path: "/add-category",
       name: "add-category",
       component: AddBookCatView,
+      meta: { needsAuth: true },
+    },
+    {
+      path: "/delete-category/:id",
+      name: "delete-category",
+      component: DeleteBookCatView,
       meta: { needsAuth: true },
     },
     {
@@ -172,6 +196,12 @@ const router = createRouter({
       meta: { needsAuth: true },
     },
     {
+      path: "/delete-department/:id",
+      name: "delete-department",
+      component: DeleteDepartmentView,
+      meta: { needsAuth: true },
+    },
+    {
       path: "/detail-department/:id",
       name: "detail-department",
       component: DetailDepartmentView,
@@ -188,6 +218,12 @@ const router = createRouter({
       path: "/users",
       name: "users",
       component: ListUserView,
+      meta: { needsAuth: true },
+    },
+    {
+      path: "/delete-user/:id",
+      name: "delete-user",
+      component: DeleteUserView,
       meta: { needsAuth: true },
     },
     {
