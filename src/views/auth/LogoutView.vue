@@ -13,9 +13,6 @@ const showLogoutItem = ref(true);
 
 const logoutEmployee = (value: boolean) => {
   if (value) {
-    console.log("In logout, value : ", value);
-    console.log("In logout, initialAuthUser : ", initialAuthUser);
-    
     apiContext.logout(initialAuthUser);
     router.replace("/home");
   } else {
