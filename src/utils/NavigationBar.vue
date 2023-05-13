@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { useAuthUser } from "@/composables/useAuthUser";
+import { computed } from "vue";
 
 const { authUser } = useAuthUser();
+
+const isLoggedIn = computed(() => authUser.value.isLoggedIn);
 </script>
 
 <template>
@@ -16,9 +19,7 @@ const { authUser } = useAuthUser();
       <router-link class="nav-link" to="/books">Books</router-link>
     </li>
     <li class="nav-item">
-      <router-link class="nav-link" to="/categories"
-        >Categories</router-link
-      >
+      <router-link class="nav-link" to="/categories">Categories</router-link>
     </li>
     <li class="nav-item">
       <router-link class="nav-link" to="/departments">Departments</router-link>
@@ -27,14 +28,14 @@ const { authUser } = useAuthUser();
       <router-link class="nav-link" to="/users">Users</router-link>
     </li>
     <li class="nav-item">
-      <router-link class="nav-link" to="/login" v-if="!authUser.isLoggedIn"
+      <router-link class="nav-link" to="/login" v-if="!isLoggedIn"
         >Login</router-link
       >
     </li>
-    <li class="nav-item" v-if="authUser.isLoggedIn">
+    <li class="nav-item" v-if="isLoggedIn">
       <router-link class="nav-link" to="/logout">Logout</router-link>
     </li>
-    <li class="dropdown" v-if="authUser.isLoggedIn">
+    <li class="dropdown" v-if="isLoggedIn">
       <router-link
         class="btn btn-link dropdown-toggle"
         to="#"
@@ -77,9 +78,5 @@ const { authUser } = useAuthUser();
 .btn-link,
 .nav-link {
   color: black;
-}
-.btn-link:hover,
-.nav-link:hover {
-  color: red;
 }
 </style>

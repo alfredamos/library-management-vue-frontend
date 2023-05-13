@@ -272,6 +272,7 @@ const router = createRouter({
       meta: { needsNoAuth: true },
     },
   ],
+  linkExactActiveClass: "active", // active class for *exact* links.
 });
 
 router.beforeEach((to, from, next) => {
