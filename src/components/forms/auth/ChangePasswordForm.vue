@@ -41,7 +41,7 @@ const backToList = () => {
           <text-input
             id="oldPassword"
             v-model="changePassword.oldPassword"
-            label="Password"
+            label="Old Password"
             type="password"
           />
           <text-input
