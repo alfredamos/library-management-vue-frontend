@@ -14,7 +14,7 @@ currentUser.value = apiContext.getAuthUser().user!;
 
 const oldEmployeeCredential = ref<ChangePasswordDto>({
   email: currentUser?.value?.email,
-  password: "",
+  oldPassword: "",
   newPassword: "",
   confirmPassword: "",
 });

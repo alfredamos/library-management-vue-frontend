@@ -2,7 +2,7 @@
 import type ChangePasswordDto from "@/models/auth/change-password.model";
 import { ref } from "vue";
 import TextInput from "@/utils/TextInput.vue";
-import TheButton from '@/utils/TheButton.vue';
+import TheButton from "@/utils/TheButton.vue";
 
 interface Props {
   oldAuthInfo: ChangePasswordDto;
@@ -39,8 +39,8 @@ const backToList = () => {
             type="email"
           />
           <text-input
-            id="password"
-            v-model="changePassword.password"
+            id="oldPassword"
+            v-model="changePassword.oldPassword"
             label="Password"
             type="password"
           />

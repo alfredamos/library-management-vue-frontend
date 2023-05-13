@@ -1,6 +1,6 @@
 class ChangePasswordDto{
       email!: string;
-      password!: string;
+      oldPassword!: string;
       newPassword!: string;
       confirmPassword!: string;
 }
