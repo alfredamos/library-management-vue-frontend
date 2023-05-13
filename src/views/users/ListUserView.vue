@@ -3,11 +3,37 @@ import { useFetch } from "@/composables/useFetch";
 import type ListUserDto from "@/models/users/list-user.model";
 import { userUrl } from "@/urls/user.url";
 import LinkButton from "@/utils/LinkButton.vue";
+import { watch, ref } from "vue";
+import SearchItem from "@/utils/SearchItem.vue";
+
+const filteredUsers = ref<ListUserDto[]>([])
 
 const { resource: users } = useFetch<ListUserDto[]>(userUrl);
+
+watch(users, () => {
+  filteredUsers.value = users.value;
+});
+
+const searchHandler = (searchItem: string) => {
+  filteredUsers.value =
+    searchItem === ""
+      ? users.value
+      : users.value.filter((user) => searchCriteria(user, searchItem));
+};
+
+const searchCriteria = (user: ListUserDto, searchItem: string) => {
+ return user.name.toLowerCase().includes(searchItem.toLowerCase()) || 
+        user.email.toLowerCase().includes(searchItem.toLowerCase()) ||
+        user.phone.toLowerCase().includes(searchItem.toLowerCase()) ||
+        user.department?.name.toLowerCase().includes(searchItem.toLowerCase()) ||
+        user.department?.faculty.toLowerCase().includes(searchItem.toLowerCase()) ||
+        user.gender?.toLowerCase().includes(searchItem.toLowerCase()) 
+}
+
 </script>
 
 <template>
+   <search-item @on-search-item="searchHandler" />
   <div class="border pado">
     <div class="card">
       <div class="card-header">
@@ -27,7 +53,7 @@ const { resource: users } = useFetch<ListUserDto[]>(userUrl);
             </tr>
           </thead>
           <tbody>
-            <tr v-for="user in users" :key="user.id">
+            <tr v-for="user in filteredUsers" :key="user.id">
               <td>
                 <router-link
                   class="no-text-deco"

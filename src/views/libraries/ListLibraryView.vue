@@ -4,11 +4,38 @@ import type ListLibraryDto from "@/models/libraries/list-library.model";
 import { libraryUrl } from "@/urls/library.url";
 import LinkButton from "@/utils/LinkButton.vue";
 import moment from "moment";
+import { watch, ref } from "vue";
+import SearchItem from "@/utils/SearchItem.vue";
+
+
+const filteredLibraries = ref<ListLibraryDto[]>([]);
 
 const { resource: libraries } = useFetch<ListLibraryDto[]>(libraryUrl);
+
+watch(libraries, () => {
+  filteredLibraries.value = libraries.value;
+});
+
+const searchHandler = (searchItem: string) => {
+  filteredLibraries.value =
+    searchItem === ""
+      ? libraries.value
+      : libraries.value.filter((library) =>
+          searchCriteria(library, searchItem)
+        );
+};
+
+const searchCriteria = (library: ListLibraryDto, searchItem: string) => {
+  return (
+    library.book?.title.toLowerCase().includes(searchItem.toLowerCase()) ||
+    library.user?.name.toLowerCase().includes(searchItem.toLowerCase()) ||
+    library.requesterCategory.toLowerCase().includes(searchItem.toLowerCase()) 
+  );
+};
 </script>
 
 <template>
+  <search-item @on-search-item="searchHandler" />
   <div class="border pado">
     <div class="card">
       <div class="card-header">
@@ -27,8 +54,14 @@ const { resource: libraries } = useFetch<ListLibraryDto[]>(libraryUrl);
             </tr>
           </thead>
           <tbody>
-            <tr v-for="library in libraries" :key="library.id">
-              <td><router-link class="no-text-deco" :to="`/detail-library/${library.id}`">{{ library.user?.name }}</router-link></td>
+            <tr v-for="library in filteredLibraries" :key="library.id">
+              <td>
+                <router-link
+                  class="no-text-deco"
+                  :to="`/detail-library/${library.id}`"
+                  >{{ library.user?.name }}</router-link
+                >
+              </td>
               <td>{{ library.book?.title }}</td>
               <td>{{ library.requesterCategory }}</td>
               <td>{{ moment(library.dateBookOut).format("MMMM DD YYYY") }}</td>

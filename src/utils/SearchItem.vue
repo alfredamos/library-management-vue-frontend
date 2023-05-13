@@ -11,18 +11,15 @@ const searchHandler = () => {
 </script>
 
 <template>
-  <div class="input-group rounded mb-3 mt-3">
+  <form @submit.prevent="searchHandler" class="d-flex m-lg-5">
     <input
       v-model="searchItem"
-      @click="searchHandler"
+      @input="searchHandler"
+      class="form-control me-2"
       type="search"
-      class="form-control rounded"
       placeholder="Search"
       aria-label="Search"
-      aria-describedby="search-addon"
     />
-    <span class="input-group-text border-0" id="search-addon">
-      <i class="fas fa-search"></i>
-    </span>
-  </div>
+    <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
 </template>

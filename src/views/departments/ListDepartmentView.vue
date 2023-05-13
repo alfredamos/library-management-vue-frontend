@@ -3,11 +3,32 @@ import { useFetch } from "@/composables/useFetch";
 import type DepartmentDto from "@/models/departments/department.model";
 import { departmentUrl } from "@/urls/department.url";
 import LinkButton from "@/utils/LinkButton.vue";
+import { watch, ref } from "vue";
+import SearchItem from "@/utils/SearchItem.vue";
+
+const filteredDepartments = ref<DepartmentDto[]>([]);
 
 const { resource: departments } = useFetch<DepartmentDto[]>(departmentUrl);
+
+watch(departments, () => {
+  filteredDepartments.value = departments.value;
+});
+
+const searchHandler = (searchItem: string) => {
+  filteredDepartments.value =
+    searchItem === ""
+      ? departments.value
+      : departments.value.filter((department) => searchCriteria(department, searchItem));
+};
+
+const searchCriteria = (department: DepartmentDto, searchItem: string) => {
+ return department.name.toLowerCase().includes(searchItem.toLowerCase()) || 
+          department.faculty.toLowerCase().includes(searchItem.toLowerCase())
+}
 </script>
 
 <template>
+  <search-item @on-search-item="searchHandler" />
   <div class="border pado">
     <div class="card">
       <div class="card-header">
@@ -23,8 +44,14 @@ const { resource: departments } = useFetch<DepartmentDto[]>(departmentUrl);
             </tr>
           </thead>
           <tbody>
-            <tr v-for="department in departments" :key="department.id">
-              <td><router-link class="no-text-deco" :to="`/detail-department/${department.id}`">{{ department.name }}</router-link></td>
+            <tr v-for="department in filteredDepartments" :key="department.id">
+              <td>
+                <router-link
+                  class="no-text-deco"
+                  :to="`/detail-department/${department.id}`"
+                  >{{ department.name }}</router-link
+                >
+              </td>
               <td>{{ department.faculty }}</td>
               <td>
                 <LinkButton
@@ -55,7 +82,7 @@ const { resource: departments } = useFetch<DepartmentDto[]>(departmentUrl);
 </template>
 
 <style scoped>
-.pado{
+.pado {
   padding: 10px;
 }
 

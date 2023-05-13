@@ -4,13 +4,22 @@ import { authorsUrl } from "../../endpoints/author.endpoint";
 import type AuthorDto from "../../models/authors/author.model";
 import LinkButton from "@/utils/LinkButton.vue";
 import SearchItem from "@/utils/SearchItem.vue";
+import { watch, ref } from "vue";
+
+const filteredAuthors = ref<AuthorDto[]>([])
 
 const { resource: authors } = useFetch<AuthorDto[]>(authorsUrl);
 
+watch(authors, () => {
+  
+  filteredAuthors.value = authors.value
+})
+
 const searchHandler = (searchItem: string) => {
-  //const searchAuthors = authors.value.;
-  console.log("search-item : ", searchItem);
-  //console.log("search-authors : ", searchAuthors);
+  filteredAuthors.value = searchItem === "" ? authors.value :
+  authors.value.filter((author) =>
+    author.name.toLowerCase().includes(searchItem.toLowerCase())
+  );
 };
 </script>
 
@@ -30,7 +39,7 @@ const searchHandler = (searchItem: string) => {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="author in authors" :key="author.id">
+            <tr v-for="author in filteredAuthors" :key="author.id">
               <td>
                 <router-link
                   class="no-text-deco"

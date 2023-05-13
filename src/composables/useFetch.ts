@@ -1,10 +1,8 @@
 import { onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
 import ApiGeneral from "@/services/api-general.service";
 
 export function useFetch<T>(url: string) {
   const resource = ref<T>(null!);
-  console.log("In useFetch, url : ", url);
 
   onMounted(() => {
     ApiGeneral.get(url)
@@ -19,5 +17,7 @@ export function useFetch<T>(url: string) {
       });
   });
 
+  console.log("At exit of use-fetch, resource : ", resource);
+  
   return { resource };
 }

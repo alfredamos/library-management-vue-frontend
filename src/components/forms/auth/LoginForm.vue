@@ -42,13 +42,7 @@ const backToList = () => {
             type="password"
           />          
         </div>
-        <div class="card-footer">
-          <!-- <button
-            type="submit"
-            class="btn btn-outline-primary form-control m-1 fw-bold"
-          >
-            Submit
-          </button> -->
+        <div class="card-footer">          
           <the-button
           button-type="submit"
           button-color="outline-primary"

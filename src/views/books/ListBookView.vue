@@ -4,11 +4,35 @@ import type ListBookDto from "@/models/books/list-book.model";
 import { bookUrl } from "@/urls/book.url";
 import LinkButton from "@/utils/LinkButton.vue";
 import moment from "moment";
+import SearchItem from "@/utils/SearchItem.vue";
+import { ref, watch } from "vue";
+
+const filteredBooks = ref<ListBookDto[]>([])
 
 const { resource: books } = useFetch<ListBookDto[]>(bookUrl);
+
+watch(books, () => {  
+  filteredBooks.value = books.value
+})
+
+const searchHandler = (searchItem: string) => {
+  filteredBooks.value = searchItem === "" ? books.value :
+  books.value.filter((book) => searchCriteria(book, searchItem))
+};
+
+const searchCriteria = (book: ListBookDto, searchItem: string) => {
+ return book.title.toLowerCase().includes(searchItem.toLowerCase()) || 
+          book.isbn.toLowerCase().includes(searchItem.toLowerCase()) ||
+          book.author?.name.toLowerCase().includes(searchItem.toLowerCase()) ||
+          book.category?.name.toLowerCase().includes(searchItem.toLowerCase()) ||
+          book.edition.toLowerCase().includes(searchItem.toLowerCase()) ||
+          book.publisher.toLowerCase().includes(searchItem.toLowerCase()) ||
+          book.volume.toLowerCase().includes(searchItem.toLowerCase()) 
+}
 </script>
 
 <template>
+  <SearchItem @on-search-item="searchHandler"/>
   <div class="border pado">
     <div class="card">
       <div class="card-header">
@@ -31,7 +55,7 @@ const { resource: books } = useFetch<ListBookDto[]>(bookUrl);
             </tr>
           </thead>
           <tbody>
-            <tr v-for="book in books" :key="book.id">
+            <tr v-for="book in filteredBooks" :key="book.id">
               <td>
                 <router-link
                   class="no-text-deco"

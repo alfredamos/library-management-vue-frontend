@@ -3,11 +3,29 @@ import { useFetch } from "@/composables/useFetch";
 import type BookCatDto from "@/models/book-categories/book-category.model";
 import { bookCatUrl } from "@/urls/book-category.url";
 import LinkButton from "@/utils/LinkButton.vue";
+import {watch, ref} from "vue";
+import SearchItem from "@/utils/SearchItem.vue";
+
+const filteredBookCats = ref<BookCatDto[]>([])
 
 const { resource: bookCats } = useFetch<BookCatDto[]>(bookCatUrl);
+
+watch(bookCats, () => {
+  
+  filteredBookCats.value = bookCats.value
+})
+
+const searchHandler = (searchItem: string) => {
+  filteredBookCats.value = searchItem === "" ? bookCats.value :
+  bookCats.value.filter((bookCat) =>
+    bookCat.name.toLowerCase().includes(searchItem.toLowerCase())
+  );
+};
+
 </script>
 
 <template>
+  <search-item @on-search-item="searchHandler" />
   <div class="border pado">
     <div class="card">
       <div class="card-header">
@@ -22,7 +40,7 @@ const { resource: bookCats } = useFetch<BookCatDto[]>(bookCatUrl);
             </tr>
           </thead>
           <tbody>
-            <tr v-for="category in bookCats" :key="category.id">
+            <tr v-for="category in filteredBookCats" :key="category.id">
               <td>
                 <router-link
                   class="no-text-deco"
